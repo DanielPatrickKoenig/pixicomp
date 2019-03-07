@@ -1,0 +1,167 @@
+button{
+  background-color:#00cc00;
+}
+button.delete-section-button{
+  float: right;
+}
+button.delete-section-button::after{
+  content: "\00D7";
+}
+div.delete-confirmation-modal{
+  position:fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  background-color:rgba(0,0,0,.8);
+}
+div.delete-confirmation-modal > div{
+  width: 200px;
+  height: 100px;
+  padding:10px;
+  margin: 20px auto;
+  background-color: rgba(255,255,255,.8);
+}
+div.drag-proxy-stage{
+  width:500px;
+  height: 500px;
+  position: relative;
+  margin-top:-504px;
+}
+div.drag-proxy-stage div.drag-proxy{
+  position: absolute;
+}
+div.drag-proxy-stage div.drag-proxy-control{
+  position: absolute;
+  background-color:#000000;
+  border-radius:10px;
+}
+div.drag-proxy-stage div.drag-proxy-overlay{
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  background-color:rgba(0,0,0,.2);
+  z-index:101;
+}
+ul{
+  display:block;
+  padding:0;
+  margin:0 0 0 10px;
+}
+ul > li{
+  display:block;
+  padding:0;
+  margin:0;
+}
+display-tree-item > div,
+tween > div
+{
+  position: relative;
+}
+display-tree-item > div > confirm-delete > button.delete-section-button,
+tween > div > confirm-delete > button.delete-section-button,
+tween-step > confirm-delete >  button.delete-section-button,
+tween-step > ul > li > confirm-delete > button.delete-section-button
+{
+  position:absolute;
+  right:0;
+  top:6px;
+}
+display-tree-item > div > ul > li{
+  padding-top:6px;
+  padding-bottom:6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+tween > div > ul > li{
+  padding-top:6px;
+  padding-bottom:6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+tween > div > label{
+  padding-top:6px;
+  padding-bottom:6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.5);
+  display:block;
+}
+tween-step > label{
+  padding-top:6px;
+  padding-bottom:6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.5);
+  display:block;
+}
+tween-step ul > li{
+  position: relative;
+}
+tween-step{
+  position: relative;
+  display: block;
+}
+tween-step ul > li > label{
+  padding-top:6px;
+  padding-bottom:6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.5);
+  display:block;
+}
+tween-step ul > li > label > input[type='number']{
+  float:right;
+  margin-right: 30px;
+}
+display-tree-item > div > ul > li > input[type='text'],
+display-tree-item > div > ul > li > input[type='number'],
+display-tree-item > div > ul > li > label > input[type='text'],
+display-tree-item > div > ul > li > label > input[type='number']{
+  float:right;
+}
+li:last-child > button{
+  display: block;
+  margin-top:6px;
+  margin-bottom:6px;
+  width:100%;
+}
+add-item > div > select{
+  width:100%;
+}
+add-item > div > div > button{
+  float: right;
+  margin: 3px 0 0 3px;
+}
+add-item > div > div{
+  min-height: 25px;
+}
+app-root > div > display-tree-list > ul{
+  position: fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  overflow-y: auto;
+  width:380px;
+}
+
+app-root > div > display-tree-list > ul input[type='number'],
+app-root > div > display-tree-list > ul input[type='text']{
+  width:40px;
+  float:right;
+  margin-right:30px;
+}
+
+.reorder-handle{
+  display: block;
+  padding:10px;
+}
+.reorder-handle::after{
+  content: "\2195";
+}
+div.reorder-overlay{
+  position:fixed;
+  z-index:101;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  background-color: rgba(0,0,0,.1);
+}
+div.item-reordering ul > li:not(:first-child){
+  visibility: hidden;
+}

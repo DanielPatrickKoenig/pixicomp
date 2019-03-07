@@ -1,0 +1,28 @@
+<div>
+  <ul>
+    <li>
+      {{teir.type}}
+    </li>
+    <li *ngIf="teir.src">
+      <span>Source</span>
+      <input type="text" [value]="teir.src" (input)="teir.src = $event.target.value; onValueUpdated();"/>
+    </li>
+    <li *ngFor="let item of propertyList; index as i;">
+      <label>
+        <span>{{item}}</span>
+        <input type="number" [value]="teir[item]" (input)="teir[item] = $event.target.value; onValueUpdated();"/>
+      </label>
+    </li>
+    <li *ngIf="teir.tweens">
+      Tweens
+      <tween-list [tweens]="teir.tweens" (updated)="onValueUpdated(e)"></tween-list>
+    </li>
+    <li *ngIf="teir.children">
+      Children
+      <display-tree-list (updated)="onValueUpdated(e)" [pm]="pm" [items]="teir.children"></display-tree-list>
+    </li>
+    <li>
+      <button>Add Child</button>
+    </li>
+  </ul>
+</div>
