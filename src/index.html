@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularProject</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="src/assets/formstyle.css">
+</head>
+<body>
+    <div id="saveablecontentdiv" style="display:none;"></div>
+    <app-root></app-root>
+    <script type="text/javascript" src="node_modules/pixi.js/dist/pixi.min.js"></script>
+    <script type="text/javascript" src="dist/angular-project/runtime.js"></script>
+    <script type="text/javascript" src="dist/angular-project/polyfills.js"></script>
+    <script type="text/javascript" src="dist/angular-project/styles.js"></script>
+    <script type="text/javascript" src="dist/angular-project/vendor.js"></script>
+    <script type="text/javascript" src="dist/angular-project/main.js"></script>
+    <script>
+        const {fsm} = require('./fsm.js');
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        ipcRenderer.on('proj:save',function(e,v){
+            fsm.saveAs(document.getElementById("saveablecontentdiv").innerHTML, function (name) {
+              // alert('your file (' + name + ') was saved.');
+              //document.querySelector("head > title").innerHTML = name;
+            }, function (err) {
+              alert("Error: " + err.toString());
+            }
+          );
+        });
+        ipcRenderer.on('proj:open',function(e,v){
+            fsm.selectFile(function (content, file) {
+              document.getElementById('saveablecontentdiv').innerHTML = content;
+              document.getElementById('openbuttonelement').click();
+            }, function (err) {
+              alert("Error: " + err.toString());
+            }
+          );
+        });
+        // ipcRenderer.on('proj:insert',function(e,v){
+        //   document.getElementById('applicationaddobjectbutton').click();
+        // });
+
+      </script>
+  </body>
+</html>
