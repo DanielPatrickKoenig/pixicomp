@@ -14,6 +14,10 @@ import { TweenStep } from './components/tweenstep.component';
 import {ConfirmDelete} from './components/confirmdelete.component';
 import {DrageProxyStage} from './components/dragproxystage.component';
 import {DragProxy} from './components/dragproxy.component';
+import {Timeline} from './components/timeline.component';
+import {Tweenline} from './components/tweenline.component';
+import {Stepline} from './components/stepline.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import {DragProxy} from './components/dragproxy.component';
     TweenStep,
     ConfirmDelete,
     DrageProxyStage,
-    DragProxy
+    DragProxy,
+    Timeline,
+    Tweenline,
+    Stepline
   ],
   imports: [
     FormsModule,
