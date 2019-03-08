@@ -10,6 +10,8 @@ import PixiManager from './objects/PixiManager';
       <drag-proxy-stage [pm]="pm" [scope]="scopeList" (updated)="onValueUpdated(e)"></drag-proxy-stage>
       <display-tree-list (updated)="onValueUpdated(e)" [pm]="pm" [items]="cData"></display-tree-list>
       <button id="openbuttonelement" style="display:none;" (click)="onOpened($event)">OPEN</button>
+      <label>Should Edit Children <input type="checkbox" [(ngModel)]="shouldEditChildren" (change)="onEditChildrenChange()" /></label>
+      <timeline *ngIf="scopedItem != null" [scope]=scopedItem></timeline>
     </div>
   `,
   styles: []
@@ -22,6 +24,7 @@ export class AppComponent {
   version: number = Math.random();
   scopedItem: any = null;
   scopeList: Array<any> = [];
+  shouldEditChildren: boolean = false;
   onStart(e){
     console.log('Start');
   }
@@ -103,12 +106,15 @@ export class AppComponent {
     comp.scopeList = comp.cData;
     if(comp.scopedItem != null){
       if(comp.scopedItem.children){
-        comp.scopeList = comp.scopedItem.children;
+        comp.scopeList = this.shouldEditChildren ? comp.scopedItem.children : [comp.scopedItem];//comp.scopedItem.children;
       }
       else{
         comp.scopeList = [comp.scopedItem];
       }
     }
     // console.log(comp.scopeList);
+  }
+  onEditChildrenChange(){
+    this.manageScope(this)
   }
 }
