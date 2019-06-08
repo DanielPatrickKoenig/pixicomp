@@ -26,11 +26,15 @@ import Trig from '../objects/Trig';
         <span>Source</span>
         <input type="text" [value]="teir.src" (input)="teir.src = $event.target.value; onValueUpdated();"/>
       </li>
+      <li *ngIf="hasText(teir.type)">
+        <span>Text</span>
+        <input type="text" [value]="teir.text" (input)="teir.text = $event.target.value; onValueUpdated();"/>
+      </li>
       <li *ngFor="let item of propertyList; index as i;">
         <label>
-          <span>{{item}}</span>
-          <input *ngIf="item!='rotation'" type="number" [value]="teir[item]" (input)="teir[item] = $event.target.value; onValueUpdated();"/>
-          <input *ngIf="item=='rotation'" type="number" [value]="trig.radiansToDegrees(teir[item])" (input)="teir[item] = trig.degreesToRadians($event.target.value); onValueUpdated();"/>
+          <span>{{propertyList[i].name}}</span>
+          <input *ngIf="item.name!='rotation'" [type]="item.type" [value]="teir[item.name]" (input)="teir[item.name] = $event.target.value; onValueUpdated();"/>
+          <input *ngIf="item.name=='rotation'" [type]="item.type" [value]="trig.radiansToDegrees(teir[item.name])" (input)="teir[item.name] = trig.degreesToRadians($event.target.value); onValueUpdated();"/>
         </label>
       </li>
       <li>
@@ -62,15 +66,19 @@ export class DisplayTreeItem extends BaseEmitterComponent{
   reordering: boolean = false;
 
   // @Output() updated: EventEmitter<any> = new EventEmitter();
-  propertyList: Array<string> = [];
+  propertyList: Array<any> = [];
   // ngOnInit(){
   //   for (var p in this.pm.Properties){
   //     this.propertyList.push(p);
   //   }
   // }
   ngOnInit(){
-    for (var p in this.pm.Properties){
-      this.propertyList.push(p);
+    // for (var p in this.pm.Properties){
+    //   this.propertyList.push(p);
+    // }
+    let props = this.pm.getProperties(this.teir.type, true)
+    for (var p in props){
+      this.propertyList.push(props[p]);
     }
   }
   getDragClass(){
@@ -78,6 +86,9 @@ export class DisplayTreeItem extends BaseEmitterComponent{
   }
   hasSource(type:string):boolean{
     return type == this.pm.DisplayTypes.Image;
+  }
+  hasText(type:string):boolean{
+    return type == this.pm.DisplayTypes.Text;
   }
   addChildToItem(e):void{
     console.log(e);
@@ -88,6 +99,7 @@ export class DisplayTreeItem extends BaseEmitterComponent{
     this.pm.addTeir(e, subTeir);
     this.teir.children.push(subTeir);
     this.adding = false;
+    this.onValueUpdated();
   }
   onHandleDown(e):void{
     console.log('drag down');

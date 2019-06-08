@@ -27,6 +27,7 @@ export class DisplayTreeList extends BaseEmitterComponent{
     this.pm.addTeir(e, subTeir);
     this.items.push(subTeir);
     this.adding = false;
+    this.onValueUpdated();
   }
   // @Output() updated: EventEmitter<any> = new EventEmitter();
   // onValueUpdated(e){

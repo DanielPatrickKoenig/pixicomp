@@ -10,7 +10,9 @@ export default class PixiManager {
     Sprite: 'sprite',
     Image: 'image',
     Circle: 'circle',
-    Polygon: 'polygon'
+    Rect: 'rect',
+    Polygon: 'polygon',
+    Text: 'text'
   }
   public readonly Properties = {
     x: 'x',
@@ -21,23 +23,67 @@ export default class PixiManager {
     radius: 'r',
     alpha: 'alpha'
   }
-  public getProperties(type: string):any{
+  public readonly PropertyTypes : any = {
+    Number: 'number',
+    Text: 'text',
+    Checkbox: 'checkbox',
+    Select: 'select'
+  }
+  public readonly Fonts : any = {
+    Arial: 'Arial',
+    Helvetica: 'Helvetica',
+    Verdana: 'Verdana'
+  }
+  public readonly Alignments : any = {
+    Left: 'left',
+    Center: 'center',
+    Right: 'right'
+  }
+  public getProperties(type: string, includeNonNumerics: boolean = false):any{
     var properties: any = {
-      x: 'x',
-      y: 'y',
-      alpha: 'alpha'
+      x: {name: 'x', type: this.PropertyTypes.Number, default: 0},
+      y: {name: 'y', type: this.PropertyTypes.Number, default: 0},
+      alpha: {name: 'alpha', type: this.PropertyTypes.Number, default: 1},
+      rotation: {name: 'rotation', type: this.PropertyTypes.Number, default: 0}
     }
     switch(type){
       case this.DisplayTypes.Image:
+      case this.DisplayTypes.Rect:
       {
-        properties.width = 'width';
-        properties.height = 'height';
+        properties.width = {name: 'width', type: this.PropertyTypes.Number, default: 72};
+        properties.height = {name: 'height', type: this.PropertyTypes.Number, default: 72};
+        break;
+      }
+      case this.DisplayTypes.Text:
+      {
+        properties.wordWrapWidth = {name: 'wordWrapWidth', type: this.PropertyTypes.Number, default: 72};
+        properties.size = {name: 'size', type: this.PropertyTypes.Number, default: 12};
         break;
       }
       case this.DisplayTypes.Circle:
       {
-        properties.radius = 'radius';
+        properties.radius = {name: 'radius', type: this.PropertyTypes.Number, default: 36};
         break;
+      }
+    }
+    if (includeNonNumerics) {
+      switch(type){
+        case this.DisplayTypes.Image:
+        {
+          properties.src = {name: 'src', type: this.PropertyTypes.Text, default: 'none'};
+          break;
+        }
+        case this.DisplayTypes.Text:
+        case this.DisplayTypes.Circle:
+        case this.DisplayTypes.Rect:
+        {
+          properties.color = {name: 'color', type: this.PropertyTypes.Text, default: '000000'};
+          if (type == this.DisplayTypes.Text) {
+            properties.text = {name: 'text', type: this.PropertyTypes.Text, default: 'Placeholder'};
+            properties.font = {name: 'font', type: this.PropertyTypes.Text, default: 'Arial'};
+          }
+          break;
+        }
       }
     }
     return properties;
@@ -48,11 +94,13 @@ export default class PixiManager {
       opacity: 1,
       x: 0,
       y: 0,
-      radius: 72,
+      radius: 36,
       rotation: 0,
       strokeColor: 0x000000,
       strokeOpacity: 0,
-      strokeWidth: 1
+      strokeWidth: 1,
+      width: 72,
+      height: 72
     }
   }
   public init(el: HTMLElement, _width: number, _height: number, backgroundColor: number):void{
@@ -82,6 +130,27 @@ export default class PixiManager {
     return g
   }
 
+  public createText (content, style, width) {
+    let props = {fontFamily: style.fontFamily, fontSize: style.fontSize, fill: style.fill, align: style.align, fontWeight: style.fontWeight, wordWrap: style.wordWrap, wordWrapWidth: style.wordWrapWidth}
+    var text = new PIXI.Text(content, props)
+    // text.interactive = true
+    return text
+  }
+
+  public createRect (props) {
+    var properties = this.getDefaultProperties()
+    if (props !== undefined && props !== null) {
+      for (var p in properties) {
+        properties[p] = props[p]
+      }
+    }
+    var g = new PIXI.Graphics()
+    g.beginFill(props.color)
+    g.drawRect(properties.x, properties.y, properties.width, properties.height)
+    g.endFill()
+    return g
+  }
+
   public addTeir(teir, subTeir){
     switch(teir){
       case this.DisplayTypes.Circle:{
@@ -96,6 +165,10 @@ export default class PixiManager {
         subTeir.src = 'none';
         break;
       }
+      case this.DisplayTypes.Text:{
+        subTeir.text = 'Placeholder text';
+        break;
+      }
       case this.DisplayTypes.Polygon:{
 
         break;
@@ -107,6 +180,10 @@ export default class PixiManager {
     }
     subTeir.isMainScope = false;
     subTeir.id = "teir_" + Math.random().toString().split(".").join("") + Math.random().toString().split(".").join("") + Math.random().toString().split(".").join("");
+    var props = this.getProperties(subTeir.type)
+    for (let p in props) {
+      subTeir[p] = props[p].default
+    }
   }
 
   // public addTweenProperty(step, tween){
