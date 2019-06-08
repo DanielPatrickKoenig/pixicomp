@@ -61,15 +61,31 @@ export default class PixiComposite{
           displayObject = this.pm.createImage(teir[t].src);
           break;
         }
+        case this.pm.DisplayTypes.Text:{
+          console.log(teir[t])
+          displayObject = this.pm.createText(teir[t].text, {fontFamily: 'Arial', fontSize: Number(teir[t].size), fill: Number('0x' + teir[t].color), align: 'left', fontWeight: 'bold', wordWrap: true, wordWrapWidth: teir[t].wordWrapWidth}, teir[t].wordWrapWidth)
+          // console.log("IMAGE");
+          // displayObject = this.pm.createImage(teir[t].src);
+          break;
+        }
         case this.pm.DisplayTypes.Circle:{
           // console.log("CIRCLE");
           displayObject = this.pm.createCircle({color: Number('0x' + teir[t].color), x: 0, y: 0, radius: teir[t].radius});
           break;
         }
+        case this.pm.DisplayTypes.Rect:{
+          // console.log("CIRCLE");
+          displayObject = this.pm.createRect({color: Number('0x' + teir[t].color), x: 0, y: 0, width: teir[t].width, height: teir[t].height});
+          break;
+        }
       }
-      for (var c in this.pm.Properties) {
-        this.setDisplayProperty (teir[t], displayObject, this.pm.Properties[c]);
+      let props = this.pm.getProperties(teir[t].type, true)
+      for (var c in props) {
+        this.setDisplayProperty (teir[t], displayObject, props[c].name);
       }
+      // for (var c in this.pm.Properties) {
+      //   this.setDisplayProperty (teir[t], displayObject, this.pm.Properties[c]);
+      // }
       parent.addChild(displayObject);
       if (teir[t].children) {
         this.placeObjects(teir[t].children, displayObject);

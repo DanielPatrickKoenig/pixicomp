@@ -43,12 +43,14 @@ export class DragProxy extends BaseEmitterComponent{
     var styleData: any = {}
     var properties: any = this.getDefauts();
     switch(this.item.type){
+      case this.pm.DisplayTypes.Rect:
       case this.pm.DisplayTypes.Image:{
         // styleData = {'left':properties.x.toString()+'px', 'top':properties.y.toString()+'px','width':properties.width.toString()+'px', 'height':properties.height.toString()+'px', 'background-color':'transparent', 'box-shadow':'0 0 0 1px #000000 inset'};
         styleData = {'transform':'rotate('+this.trig.radiansToDegrees(properties.rotation).toString()+'deg)','left':properties.x.toString()+'px', 'top':properties.y.toString()+'px','width':'0px', 'height':'0px'};
         break;
       }
-      case this.pm.DisplayTypes.Sprite:{
+      case this.pm.DisplayTypes.Sprite:
+      case this.pm.DisplayTypes.Text:{
         styleData = {'left':(properties.x-(this.handleSize/2)).toString()+'px', 'top':(properties.y-(this.handleSize/2)).toString()+'px','width':'0px', 'height':'0px'};
         break;
       }
@@ -59,12 +61,14 @@ export class DragProxy extends BaseEmitterComponent{
     var styleData: any = {}
     var properties: any = this.getDefauts();
     switch(this.item.type){
+      case this.pm.DisplayTypes.Rect:
       case this.pm.DisplayTypes.Image:{
         // styleData = {'left':properties.x.toString()+'px', 'top':properties.y.toString()+'px','width':properties.width.toString()+'px', 'height':properties.height.toString()+'px', 'background-color':'transparent', 'box-shadow':'0 0 0 1px #000000 inset'};
         styleData = {'width':properties.width.toString()+'px', 'height':properties.height.toString()+'px', 'background-color':'transparent', 'box-shadow':'0 0 0 1px #000000 inset'};
         break;
       }
-      case this.pm.DisplayTypes.Sprite:{
+      case this.pm.DisplayTypes.Sprite:
+      case this.pm.DisplayTypes.Text:{
         styleData = {'width':this.handleSize.toString()+'px', 'height':this.handleSize.toString()+'px', 'background-color':'#000000', 'border-radius':this.handleSize.toString()+'px'};
         break;
       }
