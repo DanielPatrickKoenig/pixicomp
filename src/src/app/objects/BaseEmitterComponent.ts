@@ -11,14 +11,14 @@ export class BaseEmitterComponent{
   }
   private removeFlaggedSections(obj){
     if (obj.join) {
-      for (var i = obj.length -1; i >= 0; i--) {
+      for (let i = obj.length -1; i >= 0; i--) {
         if (obj[i].flagToDelete) {
           obj.splice(i, 1);
         }
       }
     }
     else {
-      for (var o in obj) {
+      for (let o in obj) {
         if (obj[o].flagToDelete) {
           delete obj[o];
         }
