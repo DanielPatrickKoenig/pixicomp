@@ -11,8 +11,8 @@ import { Component, Input } from "@angular/core";
 export class Stepline{
   @Input() step:any;
   getPropList(){
-    var pList:Array<any> = [];
-    for(var p in this.step.properties){
+    let pList:Array<any> = [];
+    for(let p in this.step.properties){
       pList.push({name: p, value: this.step.properties[p]});
     }
     return pList;

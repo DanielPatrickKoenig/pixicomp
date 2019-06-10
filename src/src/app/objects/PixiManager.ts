@@ -44,7 +44,7 @@ export default class PixiManager {
     baseHeight:30
   }
   public getProperties(type: string, includeNonNumerics: boolean = false):any{
-    var properties: any = {
+    let properties: any = {
       x: {name: 'x', type: this.PropertyTypes.Number, default: 0},
       y: {name: 'y', type: this.PropertyTypes.Number, default: 0},
       alpha: {name: 'alpha', type: this.PropertyTypes.Number, default: 1},
@@ -108,24 +108,24 @@ export default class PixiManager {
     }
   }
   public init(el: HTMLElement, _width: number, _height: number, backgroundColor: number):void{
-    var width = _width !== undefined && _width !== null ? _width : 800;
-    var height = _height !== undefined && _height !== null ? _height : 600;
+    let width = _width !== undefined && _width !== null ? _width : 800;
+    let height = _height !== undefined && _height !== null ? _height : 600;
     this.app = new PIXI.Application(width, height, {antialias: true, backgroundColor: backgroundColor, resolution: 1});
     el.appendChild(this.app.view);
     this.renderer = PIXI.autoDetectRenderer(width, height);
   }
   public createImage (src) {
-    var texture = src.textureCacheIds !== undefined && src.textureCacheIds !== null ? src : PIXI.Texture.from(src)
+    let texture = src.textureCacheIds !== undefined && src.textureCacheIds !== null ? src : PIXI.Texture.from(src)
     return new PIXI.Sprite(texture)
   }
   public createCircle (props) {
-    var properties = this.getDefaultProperties()
+    let properties = this.getDefaultProperties()
     if (props !== undefined && props !== null) {
-      for (var p in properties) {
+      for (let p in properties) {
         properties[p] = props[p]
       }
     }
-    var g = new PIXI.Graphics()
+    let g = new PIXI.Graphics()
     g.lineStyle(properties.strokeWidth, properties.strokeColor, properties.strokeOpacity)
     g.beginFill(properties.color, properties.opacity)
     g.drawCircle(properties.x, properties.y, properties.radius)
@@ -136,19 +136,19 @@ export default class PixiManager {
 
   public createText (content, style, width) {
     let props = {fontFamily: style.fontFamily, fontSize: style.fontSize, fill: style.fill, align: style.align, fontWeight: style.fontWeight, wordWrap: style.wordWrap, wordWrapWidth: style.wordWrapWidth}
-    var text = new PIXI.Text(content, props)
+    let text = new PIXI.Text(content, props)
     // text.interactive = true
     return text
   }
 
   public createRect (props) {
-    var properties = this.getDefaultProperties()
+    let properties = this.getDefaultProperties()
     if (props !== undefined && props !== null) {
-      for (var p in properties) {
+      for (let p in properties) {
         properties[p] = props[p]
       }
     }
-    var g = new PIXI.Graphics()
+    let g = new PIXI.Graphics()
     g.beginFill(props.color)
     g.drawRect(properties.x, properties.y, properties.width, properties.height)
     g.endFill()
@@ -184,7 +184,7 @@ export default class PixiManager {
     }
     subTeir.isMainScope = false;
     subTeir.id = "teir_" + Math.random().toString().split(".").join("") + Math.random().toString().split(".").join("") + Math.random().toString().split(".").join("");
-    var props = this.getProperties(subTeir.type)
+    let props = this.getProperties(subTeir.type)
     for (let p in props) {
       subTeir[p] = props[p].default
     }

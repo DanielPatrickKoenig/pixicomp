@@ -27,8 +27,8 @@ export class TweenStep extends BaseEmitterComponent{
   @Input() pm: PixiManager;
   adding: boolean;
   getProprtiesFromStep(_propList: any):Array<string>{
-    var propList:Array<string> = [];
-    for (var p in _propList) {
+    let propList:Array<string> = [];
+    for (let p in _propList) {
       propList.push(p);
     }
     // console.log(_propList)
