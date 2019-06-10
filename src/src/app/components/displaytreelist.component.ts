@@ -23,7 +23,7 @@ export class DisplayTreeList extends BaseEmitterComponent{
   adding: boolean = false;
   addSibling(e):void{
     console.log(e);
-    var subTeir:any = {type: e};
+    let subTeir:any = {type: e};
     this.pm.addTeir(e, subTeir);
     this.items.push(subTeir);
     this.adding = false;

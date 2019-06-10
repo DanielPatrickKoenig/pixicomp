@@ -40,8 +40,8 @@ export class DragProxy extends BaseEmitterComponent{
     };
   }
   getOuterMoverStyle(){
-    var styleData: any = {}
-    var properties: any = this.getDefauts();
+    let styleData: any = {}
+    let properties: any = this.getDefauts();
     switch(this.item.type){
       case this.pm.DisplayTypes.Rect:
       case this.pm.DisplayTypes.Image:{
@@ -58,8 +58,8 @@ export class DragProxy extends BaseEmitterComponent{
     return styleData;
   }
   getInnerMoverStyle(){
-    var styleData: any = {}
-    var properties: any = this.getDefauts();
+    let styleData: any = {}
+    let properties: any = this.getDefauts();
     switch(this.item.type){
       case this.pm.DisplayTypes.Rect:
       case this.pm.DisplayTypes.Image:{
@@ -76,12 +76,12 @@ export class DragProxy extends BaseEmitterComponent{
     return styleData;
   }
   getSizerStyle(){
-    var properties: any = this.getDefauts();
-    var tr:any = {
+    let properties: any = this.getDefauts();
+    let tr:any = {
       x: this.trig.orbit(properties.x,properties.width,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.COS),
       y: this.trig.orbit(properties.y,properties.width,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.SIN)
     };
-    var br:any = {
+    let br:any = {
       x: this.trig.orbit(tr.x-(this.handleSize/2),properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.COS),
       y: this.trig.orbit(tr.y-(this.handleSize/2),properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.SIN)
     };
@@ -90,10 +90,10 @@ export class DragProxy extends BaseEmitterComponent{
     // return {'left':(Number(properties.x)+Number(properties.width)-(this.handleSize/2)).toString()+'px', 'top':(Number(properties.y)+Number(properties.height)-(this.handleSize/2)).toString()+'px', 'width':this.handleSize.toString()+'px', 'height':this.handleSize.toString()+'px'}
   }
   getRotatorStyle(){
-    var rotatorRadius = 20;
-    var properties: any = this.getDefauts();
-    var xVal = this.trig.orbit(properties.x-(this.handleSize/2),rotatorRadius,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.COS);
-    var yVal = this.trig.orbit(properties.y-(this.handleSize/2),rotatorRadius,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.SIN);
+    let rotatorRadius = 20;
+    let properties: any = this.getDefauts();
+    let xVal = this.trig.orbit(properties.x-(this.handleSize/2),rotatorRadius,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.COS);
+    let yVal = this.trig.orbit(properties.y-(this.handleSize/2),rotatorRadius,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.SIN);
     return {'left':xVal.toString()+'px', 'top':yVal.toString()+'px', 'width':this.handleSize.toString()+'px', 'height':this.handleSize.toString()+'px'}
   }
   valueOrZero(property){
@@ -103,20 +103,20 @@ export class DragProxy extends BaseEmitterComponent{
     return this.item.type == this.pm.DisplayTypes.Image;
   }
   onSizerDown(e){
-    var properties: any = this.getDefauts();
+    let properties: any = this.getDefauts();
     this.dragging = true;
     this.dragMode = this.DragModes.SIZE;
     this.dragOffset = {x: e.pageX-properties.x, y: e.pageY-properties.y, width: properties.width, height: properties.height};
   }
   onMoverDown(e){
-    var properties: any = this.getDefauts();
+    let properties: any = this.getDefauts();
     this.dragging = true;
     this.dragMode = this.DragModes.MOVE;
     this.dragOffset = {x: e.pageX-properties.x, y: e.pageY-properties.y, width: properties.width, height: properties.height};
     // console.log(this.dragOffset);
   }
   onRotatorDown(e){
-    var properties: any = this.getDefauts();
+    let properties: any = this.getDefauts();
     this.dragging = true;
     this.dragMode = this.DragModes.ROTATE;
   }
@@ -126,7 +126,7 @@ export class DragProxy extends BaseEmitterComponent{
 
   }
   onDragMove(e){
-    var properties: any = this.getDefauts();
+    let properties: any = this.getDefauts();
     switch(this.dragMode) {
       case this.DragModes.MOVE:
       {
@@ -136,74 +136,46 @@ export class DragProxy extends BaseEmitterComponent{
       }
       case this.DragModes.SIZE:
       {
-        // get intersection of extention from mouse to above and top right to over, get intersection of extention from mouse to far left and bottom left to below
-        // use intersection points to deturmine width and height.
-
-        // var tl:any = {x: e.pageX - this.dragOffset.x + Number(additionalDist.x), y:e.pageY - this.dragOffset.y};
-        // var tr:any = {
-        //   x: this.trig.orbit(tl.x,properties.width,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.COS),
-        //   y: this.trig.orbit(tl.y,properties.width,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.SIN)
-        // };
-        // var br:any = {
-        //   x: this.trig.orbit(tr.x,properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.COS),
-        //   y: this.trig.orbit(tr.y,properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.SIN)
-        // };
-        // var bl:any = {
-        //   x: this.trig.orbit(tl.x,properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.COS),
-        //   y: this.trig.orbit(tl.y,properties.height,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.SIN)
-        // };
-        // this.item.width = this.trig.distance({x: properties.x, y: properties.y}, intersection1);
-        // this.item.height = this.trig.distance({x: properties.x, y: properties.y}, intersection2);
-
-        var intersoctorDist = 10000;
-        var additionalDist = {
+        let intersoctorDist = 10000;
+        let additionalDist = {
           x: this.trig.orbit(0,this.dragOffset.width,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.COS),
           y: this.trig.orbit(0,this.dragOffset.height,this.trig.radiansToDegrees(properties.rotation)+Number(90),this.trig.OrbitType.SIN)
         }
-        // console.log(additionalDist);
-        // var tl1:any = {x: e.pageX - this.dragOffset.x + Number(additionalDist.x), y:e.pageY - this.dragOffset.y};
-        var tl1:any = {x: e.pageX - this.dragOffset.x, y:e.pageY - this.dragOffset.y};
+        let tl1:any = {x: e.pageX - this.dragOffset.x, y:e.pageY - this.dragOffset.y};
 
-        var br1:any = {
+        let br1:any = {
           x: this.trig.orbit(tl1.x,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.COS),
           y: this.trig.orbit(tl1.y,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)-90,this.trig.OrbitType.SIN)
         };
-        var tr1:any = {x: properties.x, y: properties.y};
-        var bl1:any = {
+        let tr1:any = {x: properties.x, y: properties.y};
+        let bl1:any = {
           x: this.trig.orbit(tr1.x,intersoctorDist,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.COS),
           y: this.trig.orbit(tr1.y,intersoctorDist,this.trig.radiansToDegrees(properties.rotation),this.trig.OrbitType.SIN)
         };
-        var intersection1 = this.trig.intersection(tr1,br1,bl1,tl1);
-        var tl2:any = {x: e.pageX - this.dragOffset.x, y:e.pageY - this.dragOffset.y};
-        // var tl2:any = {x: e.pageX - this.dragOffset.x, y:e.pageY - this.dragOffset.y + Number(additionalDist.y)};
-        var br2:any = {
+        let intersection1 = this.trig.intersection(tr1,br1,bl1,tl1);
+        let tl2:any = {x: e.pageX - this.dragOffset.x, y:e.pageY - this.dragOffset.y};
+        let br2:any = {
           x: this.trig.orbit(tl2.x,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)+180,this.trig.OrbitType.COS),
           y: this.trig.orbit(tl2.y,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)+180,this.trig.OrbitType.SIN)
         };
-        var tr2:any = {x: properties.x, y: properties.y};
-        var bl2:any = {
+        let tr2:any = {x: properties.x, y: properties.y};
+        let bl2:any = {
           x: this.trig.orbit(tr2.x,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.COS),
           y: this.trig.orbit(tr2.y,intersoctorDist,this.trig.radiansToDegrees(properties.rotation)+90,this.trig.OrbitType.SIN)
         };
-        var intersection2 = this.trig.intersection(tr2,br2,bl2,tl2);
-        var ratios = {
+        let intersection2 = this.trig.intersection(tr2,br2,bl2,tl2);
+        let ratios = {
           x: this.trig.distance(intersection1,{x: properties.x, y: properties.y})/this.dragOffset.width,
           y: this.trig.distance(intersection2,{x: properties.x, y: properties.y})/this.dragOffset.height
         };
-        var refactoredIntersection = {
+        let refactoredIntersection = {
           x: this.trig.orbit(properties.x, this.trig.distance({x:properties.x,y:properties.y},intersection1), this.trig.angle({x:properties.x,y:properties.y},intersection1)-(this.trig.radiansToDegrees(properties.rotation))-90, this.trig.OrbitType.COS),
           y: this.trig.orbit(properties.y, this.trig.distance({x:properties.x,y:properties.y},intersection2), this.trig.angle({x:properties.x,y:properties.y},intersection2)-(this.trig.radiansToDegrees(properties.rotation))-90, this.trig.OrbitType.SIN)
         };
-        // var xSizingFactor = intersection1.x >= properties.x ? 1 : -1;
-        // var ySizingFactor = intersection2.y >= properties.y ? 1 : -1;
-        var xSizingFactor = refactoredIntersection.x >= properties.x ? 1 : -1;
-        var ySizingFactor = refactoredIntersection.y >= properties.y ? 1 : -1;
+        let xSizingFactor = refactoredIntersection.x >= properties.x ? 1 : -1;
+        let ySizingFactor = refactoredIntersection.y >= properties.y ? 1 : -1;
         this.item.width = Number(this.dragOffset.width*ratios.x*xSizingFactor)+Number(this.dragOffset.width);
         this.item.height = Number(this.dragOffset.height*ratios.y*ySizingFactor)+Number(this.dragOffset.height);
-        // this.item.width = Number(this.dragOffset.width*ratios.x)+Number(this.dragOffset.width);
-        // this.item.height = Number(this.dragOffset.height*ratios.y)+Number(this.dragOffset.height);
-        // this.item.width = this.trig.distance({x: properties.x, y: properties.y}, intersection1);
-        // this.item.height = this.trig.distance({x: properties.x, y: properties.y}, intersection2);
 
 
 
@@ -213,15 +185,12 @@ export class DragProxy extends BaseEmitterComponent{
 
         console.log('0( x : ' + this.intersections[0].x.toString() + ' | ' + 'y : ' + this.intersections[0].y.toString() + ')');
         console.log('1( x : ' + this.intersections[1].x.toString() + ' | ' + 'y : ' + this.intersections[1].y.toString() + ')');
-
-        // this.item.width = (e.pageX - this.dragOffset.x) + (this.dragOffset.width - properties.x);
-        // this.item.height = (e.pageY - this.dragOffset.y) + (this.dragOffset.height - properties.y);
         break;
       }
       case this.DragModes.ROTATE:
       {
-        var pos:any = {x: e.pageX, y: e.pageY};
-        var angle:number = this.trig.angle({x:properties.x,y:properties.y},pos);
+        let pos:any = {x: e.pageX, y: e.pageY};
+        let angle:number = this.trig.angle({x:properties.x,y:properties.y},pos);
         this.item.rotation = this.trig.degreesToRadians(angle);
         break;
       }

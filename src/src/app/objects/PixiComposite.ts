@@ -15,8 +15,7 @@ export default class PixiComposite{
     }
     this.container = new this.pm._PIXI.Sprite();
     this.pm.app.stage.addChild(this.container);
-    var self = this;
-    self.placeObjects(_config, this.container);
+    this.placeObjects(_config, this.container);
   }
   setDisplayProperty (teir, display, property) {
     if (teir[property]) {
@@ -24,10 +23,10 @@ export default class PixiComposite{
     }
   }
   executeTweens(displayObject: any, tweenData: any, step: number, scope: PixiComposite){
-    var props:any = {};
+    let props:any = {};
     if (tweenData) {
       if (tweenData.steps.length > 0) {
-        for (var p in tweenData.steps[step].properties) {
+        for (let p in tweenData.steps[step].properties) {
           props[p] = tweenData.steps[step].properties[p];
         }
         props.onComplete = scope.executeTweens;
@@ -43,8 +42,8 @@ export default class PixiComposite{
   }
   placeObjects(teir: object, parent: any):void{
     // console.log(teir);
-    for (var t in teir) {
-      var displayObject = {};
+    for (let t in teir) {
+      let displayObject = {};
       switch (teir[t].type) {
         case this.pm.DisplayTypes.Container:{
           // console.log("CONTAINER");
@@ -80,18 +79,15 @@ export default class PixiComposite{
         }
       }
       let props = this.pm.getProperties(teir[t].type, true)
-      for (var c in props) {
+      for (let c in props) {
         this.setDisplayProperty (teir[t], displayObject, props[c].name);
       }
-      // for (var c in this.pm.Properties) {
-      //   this.setDisplayProperty (teir[t], displayObject, this.pm.Properties[c]);
-      // }
       parent.addChild(displayObject);
       if (teir[t].children) {
         this.placeObjects(teir[t].children, displayObject);
       }
       if (teir[t].tweens) {
-        for (var i = 0; i < teir[t].tweens.length; i++) {
+        for (let i = 0; i < teir[t].tweens.length; i++) {
           this.executeTweens(displayObject, teir[t].tweens[i], 0, this)
         }
       }
