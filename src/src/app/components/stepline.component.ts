@@ -14,7 +14,7 @@ export class Stepline{
     var pList:Array<any> = [];
     for(var p in this.step.properties){
       pList.push({name: p, value: this.step.properties[p]});
-      return pList;
     }
+    return pList;
   }
 }

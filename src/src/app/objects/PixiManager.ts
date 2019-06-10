@@ -39,6 +39,10 @@ export default class PixiManager {
     Center: 'center',
     Right: 'right'
   }
+  public readonly TweenUIValues:any = {
+    baseWidth:100,
+    baseHeight:30
+  }
   public getProperties(type: string, includeNonNumerics: boolean = false):any{
     var properties: any = {
       x: {name: 'x', type: this.PropertyTypes.Number, default: 0},
